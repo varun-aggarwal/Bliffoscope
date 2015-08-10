@@ -9,24 +9,31 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * @author : Varun
- * @purpose: This class will covert the input file and sample files into Char [] []
- */
-public class Convertor {
+public class Main {
 
-    private List<String> readFile(String filepath) throws IOException {
-        File sampleFile = new File(filepath);
-        InputStream is = new FileInputStream(sampleFile);
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+    public static void main(String[] args) {
+        
+        String path = "D:\\qafe\\git\\Bliffoscope\\Bliffoscope\\BliffJaxRS\\WebContent\\samples\\Starship.blf";
+       try {
+           char[][] sample = (new Main()).readSample(path);
+           print2DArray(sample);
+    } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
 
-        String line = null;
-        List<String> rows = new ArrayList<String>();
-        while ((line = br.readLine()) != null) {
-            rows.add(line);
+    }
+    
+    private static void print2DArray(char[][] sample) {
+        
+        for (char[] x : sample) {
+            for (char y : x) {
+                System.out.print(y);
+            }
+            System.out.print("\n");
         }
-        br.close();
-        return rows;
+                
+            
     }
 
     private char[][] constructMatrix(List<String> rows) {
@@ -45,27 +52,19 @@ public class Convertor {
 
     public char[][] readSample(String filepath) throws IOException {
         List<String> rows = this.readFile(filepath);
-
-        // Removing last row as it is Blank line
-        rows.remove(rows.size() - 1);
-
-        // Removing first row as it is Blank line
-        rows.remove(0);
-
         for (int i = 0; i < rows.size(); i++) {
             StringBuilder sb = new StringBuilder(rows.get(i));
             sb.deleteCharAt(sb.length() - 1);
             sb.deleteCharAt(0);
-            // Removing surrounding white space in first and last column
             rows.set(i, sb.toString());
         }
 
         return this.constructMatrix(rows);
-
     }
 
-    private List<String> readFile(InputStream fileinputstream) throws IOException {
-        InputStream is = fileinputstream;
+    private List<String> readFile(String filepath) throws IOException {
+        File sampleFile = new File(filepath);
+        InputStream is = new FileInputStream(sampleFile);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
         String line = null;
@@ -73,14 +72,7 @@ public class Convertor {
         while ((line = br.readLine()) != null) {
             rows.add(line);
         }
-
         br.close();
-
         return rows;
-    }
-
-    public char[][] readData(InputStream fileinputstream) throws IOException {
-        List<String> rows = this.readFile(fileinputstream);
-        return this.constructMatrix(rows);
     }
 }
