@@ -79,6 +79,7 @@ public class FindTargets extends Application {
     }
 
     // Can be used to validate Input Stream
+    @SuppressWarnings("unused")
     private void validateInputFile(InputStream is) {
 
     }

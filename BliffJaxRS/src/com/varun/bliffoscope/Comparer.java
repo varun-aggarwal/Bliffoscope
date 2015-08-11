@@ -2,8 +2,10 @@ package com.varun.bliffoscope;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /*
  * Compares data with sample
@@ -42,17 +44,23 @@ public class Comparer {
 
         int total_pixels = sample_row * sample_column;
         int matched_pixels = 0;
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("#,###.00");
 
         df.setRoundingMode(RoundingMode.FLOOR);
-
+        DecimalFormatSymbols newSymbols = new DecimalFormatSymbols(Locale.US);
+        df.setDecimalFormatSymbols(newSymbols); 
         for (int m = 0; m < sample_row; m++) {
             for (int n = 0; n < sample_column; n++) {
                 if (data[m + i][n + j] == sample[m][n])
                     matched_pixels++;
             }
         }
-        double conf = new Double(df.format((double) matched_pixels / (double) total_pixels));
+        
+        double conf = (double) matched_pixels / (double) total_pixels;
+        if(conf>0.0){
+            conf= new Double(df.format(conf));
+        }
+            
         return new MatchCoorindates(sample_name, j, i, conf);
 
     }

@@ -2,45 +2,74 @@
 <html>
 
 <head>
-<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
 <script type="text/javascript" src="js/angular-validation.js"></script>
-</head>
+<style>
+table, td, th {
+	border: 1px solid green;
+}
 
+th {
+	background-color: green;
+	color: white;
+}
+</style>
+</head>
+<img src="images/Qafe_logo.jpg" alt="Qafe Logo"
+	style="width: 200px; height: 100px;" align="left">
+</img>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <body align="center">
 
-<div ng-app="" ng-controller="personController">
-<h1>Welcome to Bliffoscope Data Analysis </h1>
-<h2>Please upload the Bliffoscope file to find targets.<h2>
-<ul>Select Target Type *<select id="targetType" ng-model="targetType" ><option value =""></option><option value="Starship">Starship</option><option value ="SlimeTorpedo">SlimeTorpedo</option></select>
-<input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)"/><ul><br><br>
-Target Slected: {{targetType }}<br>
-<br>
-<br>
-<div ng-show="flagresult" align="center">
-<table>
-<td>Update Threshold of Confidence
-</td>
-<td><input type=text size =2 ng-model="threshold" onchange="javascript:validatethreshold();" id="threshold"></td>
-<table >
-    <tr>
-      <th>X-Coordinate</th>
-      <th>Y-Coordinate</th>
-      <th>Confidence Percentage</th>
-    </tr>
-    <tr ng-repeat="tmp in result |  filter: greaterThan('confidencepercentage', threshold)" |orderBy:'confidencepercentage' :true">
-      <td align="center">{{tmp.x}}</td>
-      <td align="center">{{tmp.y}}</td>
-      <td align="center">{{tmp.confidencepercentage}}</td>
-    </tr>
-  </table>
-</div>
-<ul style="color:Red">
-  {{ error}}
-</ul>
-</div>
-</div>
-
-
-
+	<div ng-app="" ng-controller="personController">
+		<h1>Welcome to Bliffoscope Data Analysis</h1>
+		<h2>
+			Please upload the Bliffoscope file to find targets.
+			<h2>
+				<ul>
+					Select Target Type *
+					<select id="targetType" ng-model="targetType"><option
+							value=""></option>
+						<option value="Starship">Starship</option>
+						<option value="SlimeTorpedo">SlimeTorpedo</option></select>
+					<input type="file" name="file"
+						onchange="angular.element(this).scope().uploadFile(this.files)" />
+					<ul>
+						<br>
+						<br> Target Slected: {{targetType }}
+						<br>
+						<br>
+						<br>
+						<div ng-show="flagresult" align="center">
+							<table>
+								<tr>
+									<td>Update Threshold of Confidence</td>
+									<td><input type=text size=2 ng-model="threshold"
+										onchange="javascript:validatethreshold();" id="threshold"></td>
+								</tr>
+							</table>
+							<table>
+								<tr>
+									<th>X-Coordinate</th>
+									<th>Y-Coordinate</th>
+									<th>Confidence Percentage</th>
+								</tr>
+								<tr
+									ng-repeat="tmp in result |  filter: greaterThan('confidencepercentage', threshold)"|orderBy:'confidencepercentage' :true">
+									<td align="center">{{tmp.x}}</td>
+									<td align="center">{{tmp.y}}</td>
+									<td align="center">{{tmp.confidencepercentage}}</td>
+								</tr>
+							</table>
+						</div>
+						<ul style="color: Red">{{ error}}
+						</ul>
+	</div>	
 </body>
 </html>
